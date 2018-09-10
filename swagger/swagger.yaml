@@ -1,0 +1,77 @@
+---
+swagger: '2.0'
+info:
+  description: >
+    People API
+  version: 1.0.0
+  title: People API
+basePath: "/"
+schemes:
+  - https
+paths:
+  /person:
+    get:
+      summary: get a list of people
+      description: get a list of people
+      produces:
+        - application/json;charset=UTF-8
+      parameters: []
+      responses:
+        200:
+          description: return a list of people
+          schema:
+            $ref: '#/definitions/People'
+  /person/{personId}:
+    get:
+      summary: get person
+      description: get a person by id
+      operationId: get_person_by_id
+      produces:
+        - application/json;charset=UTF-8
+      parameters:
+        - name: personId
+          in: path
+          description: The ID of the person
+          required: True
+          type: integer
+          x-example: 1
+      responses:
+        200:
+          description: returned a person
+          schema:
+            $ref: '#/definitions/Person'
+        404:
+          description: Unknown person
+definitions:
+  People:
+    type: array
+    items:
+      $ref: '#/definitions/Person'
+    example:
+      - name: Dennis 1
+        age: 42
+      - name: Dennis 2
+        age: 43
+      - name: Dennis 3
+        age: 44
+
+  Person:
+    type: object
+    required:
+      - name
+      - age
+    properties:
+      name:
+        type: string
+        example: &person_name Dennis
+        description: The name of the person
+      age:
+        type: integer
+        format: int32
+        example: &person_age 42
+        description: The name of the person
+    example: &person
+      name: *person_name
+      age: *person_age
+
+
